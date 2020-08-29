@@ -20,20 +20,20 @@ function App() {
 
         <div className="ms-Grid-col ms-sm10 ms-xl12 main-element">
           <div className="ms-Grid-row">
-            <div className="ms-Grid-col ms-md6"><Identificacion /></div>
-            <div className="ms-Grid-col ms-lg6"><TablaLlamadas /></div>
+            <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6"><Identificacion /></div>
+            <div className="ms-Grid-col ms-sm12 ms-md6 ms-lgOffset1 ms-lg4"><TablaLlamadas /></div>
           </div>
           <div className="ms-Grid-row">
-            <div className="ms-Grid-col ms-md6"><Credencial /></div>
-            <div className="ms-Grid-col ms-lg6"> <TablaConcursosGanados /></div>
+            <div className="ms-Grid-col ms-sm12 ms-md6"><Credencial /></div>
+            <div className="ms-Grid-col ms-sm12 ms-md6 ms-lgOffset1 ms-lg4"> <TablaConcursosGanados /></div>
           </div>
           <div className="ms-Grid-row">
-            <div className="ms-Grid-col ms-md6"><Llamada /></div>
-            <div className="ms-Grid-col ms-lg6"> <TablaConcursosParticipando /></div>
+            <div className="ms-Grid-col ms-sm12 ms-md6"><Llamada /></div>
+            <div className="ms-Grid-col ms-sm12 ms-md6 ms-lgOffset1 ms-lg4"> <TablaConcursosParticipando /></div>
           </div>
           <div className="ms-Grid-row">
-            <div className="ms-Grid-col ms-xl6"> <ExtraInfo /></div>
-            <div className="ms-Grid-col ms-xl6"> <HistorialConcursos /></div>
+            <div className="ms-Grid-col ms-sm12 ms-md6"> <ExtraInfo /></div>
+            <div className="ms-Grid-col ms-sm12 ms-md6 ms-lgOffset1 ms-lg4"> <HistorialConcursos /></div>
           </div>
           <div className="ms-Grid-row">
             <div className="ms-Grid-col ms-xl6"> <Boton1 /></div>
