@@ -15,13 +15,13 @@
 
 
 
-function CallerNumber(){
+async function CallerNumber(){
     // en el navegador se abrirá una ventana emergente en la que se pide 
     // las credenciales para acceder a ari.
 
     let callerNumber = '6315329325'; //numero por defecto para pruebas
 
-    fetch('http://192.168.100.145:8088/ari/channels', {
+    await fetch('http://192.168.100.145:8088/ari/channels', {
         method: 'get',
         credentials: 'include',    
     }).then( response =>{
@@ -50,6 +50,6 @@ function CallerNumber(){
     return callerNumber;
 };
 
-CallerNumber();
+var callerNumber = CallerNumber();
 
-export default CallerNumber;
+export default callerNumber;
