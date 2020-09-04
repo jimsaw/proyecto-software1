@@ -2,11 +2,14 @@ import React from 'react';
 import { DetailsList } from '@fluentui/react';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import 'office-ui-fabric-react/dist/css/fabric.css';
-var axios = require('axios');
-axios.get('http://127.0.0.1:8000/api/usuarios').then(response => {
-    console.log(response.data);
-    return response.data;
-}).catch(console.log);
+//import axios from 'axios';
+
+//var respuesta = axios.get('http://127.0.0.1:8000/api/usuarios').then(response => {
+//console.log(response.data);
+//return response.data;
+//}).catch(console.log);
+
+//console.log(respuesta);
 
 
 const classNames = mergeStyleSets({

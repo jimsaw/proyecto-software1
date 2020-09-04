@@ -7,7 +7,34 @@ import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import { ComboBox, IComboBoxOption, IComboBox } from 'office-ui-fabric-react/lib/index';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 
+
 initializeIcons(/* optional base url */);
+
+let url = 'http://127.0.0.1:8000/api/usuarios';
+let numero_celular = '6315329325';
+
+
+fetch(url)
+    .then(res => res.json())
+    .then((out) => {
+        var arreglo = [];
+        for (let i in out) {
+            if (out[i].telefono === numero_celular) {
+                arreglo.push(out[i])
+            }
+        }
+
+        const items: IComboBoxOption[] = [];
+        let x = 0;
+        for (let j in arreglo) {
+            let indice = x + 1;
+            let nombreapellido = arreglo[j].first_name + ' ' + arreglo[j].last_name;
+            items[x] = { key: indice, text: nombreapellido };
+            x++;
+        }
+        //console.log(items);
+    })
+    .catch(err => { throw err });
 
 const container = {
     display: 'flex',
@@ -43,7 +70,6 @@ const styles = {
 const cards = [
     {
         title: 'Identificación',
-        nombre: 'Luis Montenegro',
         icon: 'UserOptional',
         cedula: '1310559387',
         genero: 'Masculino',
@@ -52,10 +78,10 @@ const cards = [
 ]
 
 const items: IComboBoxOption[] = [
-    { key: 'A', text: 'Luis Montenegro' },
-    { key: 'B', text: 'Melanie Lasso' },
-    { key: 'C', text: 'Oscar Pallazhco' },
-    { key: 'D', text: 'Pedro Macias' },
+    { key: '1', text: 'Luis Montenegro' },
+    { key: '2', text: 'Melanie Lasso' },
+    { key: '3', text: 'Oscar Pallazhco' },
+    { key: '4', text: 'Pedro Macias' },
 ];
 
 //const comboBoxStyle = { maxWidth: 300 };
@@ -76,8 +102,7 @@ const columnProps: Partial<IStackProps> = {
 };
 
 const Identificacion = () => {
-
-    const [selectedKey, setSelectedKey] = React.useState('C');
+    const [selectedKey, setSelectedKey] = React.useState('2');
 
     const onChange = React.useCallback(
         (ev: React.FormEvent<IComboBox>, option?: IComboBoxOption): void => {

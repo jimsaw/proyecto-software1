@@ -12,7 +12,7 @@ import TablaConcursosGanados from './TablaConcursosGanados';
 import TablaConcursosParticipando from './TablaConcursosParticipando';
 import HistorialConcursos from './HistorialConcursos';
 import Boton1 from './Boton1';
-import CallerNumber from './callerNumber';
+//import CallerNumber from './callerNumber';
 
 function App() {
   return (

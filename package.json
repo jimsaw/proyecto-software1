@@ -8,9 +8,13 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@uifabric/react-cards": "^0.111.0",
+    "aws-sdk": "^2.743.0",
+    "axios": "^0.20.0",
     "react": "^16.13.1",
+    "react-axios": "^2.0.3",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "sqlite3": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,5 +36,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-preset-latest": "^6.24.1"
   }
 }
