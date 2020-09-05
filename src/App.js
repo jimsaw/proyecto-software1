@@ -37,7 +37,7 @@ class App extends Component {
         <div className="ms-Grid-row">
           <div className="ms-Grid-col ms-sm10 ms-xl12 main-element">
             <div className="ms-Grid-row">
-              <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6"><Identificacion /></div>
+              <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6"><Identificacion numero = {this.state.numero} /></div>
               <div className="ms-Grid-col ms-sm12 ms-md6 ms-lgOffset1 ms-lg4"><TablaLlamadas /></div>
             </div>
             <div className="ms-Grid-row">
@@ -45,7 +45,7 @@ class App extends Component {
               <div className="ms-Grid-col ms-sm12 ms-md6 ms-lgOffset1 ms-lg4"> <TablaConcursosGanados /></div>
             </div>
             <div className="ms-Grid-row">
-              <div className="ms-Grid-col ms-sm12 ms-md6"><Llamada /></div>
+              <div className="ms-Grid-col ms-sm12 ms-md6"><Llamada numero={this.state.numero} /></div>
               <div className="ms-Grid-col ms-sm12 ms-md6 ms-lgOffset1 ms-lg4"> <TablaConcursosParticipando /></div>
             </div>
             <div className="ms-Grid-row">

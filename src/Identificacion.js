@@ -11,7 +11,7 @@ import { CommonLoading } from 'react-loadingg';
 
 initializeIcons(/* optional base url */);
 
-var telefono_asterisk = '0983601005';
+// var telefono_asterisk = '0989901006';
 //var telefono_asterisk_vacio = '';
 
 const container = {
@@ -62,8 +62,8 @@ class Identificacion extends React.Component {
         };
     }
 
-    componentDidMount() {
-        fetch("http://127.0.0.1:8000/api/usuarios")
+    async componentDidMount() {
+        await fetch("http://127.0.0.1:8000/api/usuarios")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -92,7 +92,7 @@ class Identificacion extends React.Component {
             return <CommonLoading style={{ margin: '5vh 0', }} />;
         } else {
             for (var i = 0; i < items.length; i++) {
-                if (items.[i].telefono === telefono_asterisk) {
+                if (items[i].telefono === this.props.numero) {
                     if (items[i].genero === 'M') {
                         return (
                             <div style={container}>

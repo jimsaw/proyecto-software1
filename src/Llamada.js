@@ -1,9 +1,10 @@
-import React from 'react';
+
 import { Card } from '@uifabric/react-cards';
 import { Text } from '@fluentui/react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import 'office-ui-fabric-react/dist/css/fabric.css';
 import { Stack } from 'office-ui-fabric-react/lib/Stack';
+import React, { Component } from 'react';
 
 const container = {
     display: 'flex',
@@ -75,30 +76,33 @@ const columnProps: Partial<IStackProps> = {
     styles: { root: { width: '80%' } },
 };
 
-const Llamada = () => {
-    return (
-        <div style={container}>
-            {cards.map((card) => (
-                <div className="s-Grid-col ms-sm-3 ms-xl12" key={card.key}>
-                    <Card style={styles.cardStyles}>
-                        <Card.Section>
-                            <Card.Item>
-                                <i style={icon} className={`ms-Icon ms-Icon--${card.icon}`} aria-hidden="true"></i>
-                                <Text style={styles.header.root}>{card.title}</Text>
-                            </Card.Item>
-                            <Stack horizontal tokens={stackTokens} styles={stackStyles}>
-                                <Stack {...columnProps}>
-                                    <TextField styles={getStyles} label="Total llamadas realizadas:" underlined defaultValue={card.totalllamadas} />
-                                    <TextField styles={getStyles} label="Llamadas realizadas hoy:" underlined defaultValue={card.llamadashoy} />
-                                    <TextField styles={getStyles} label="Número de teléfono:" underlined defaultValue={card.numtelefono} />
+class Llamada extends Component {
+
+    render() {  
+        return (            
+            <div style={container}>
+                {cards.map((card) => (
+                    <div className="s-Grid-col ms-sm-3 ms-xl12" key={card.key}>
+                        <Card style={styles.cardStyles}>
+                            <Card.Section>
+                                <Card.Item>
+                                    <i style={icon} className={`ms-Icon ms-Icon--${card.icon}`} aria-hidden="true"></i>
+                                    <Text style={styles.header.root}>{card.title}</Text>
+                                </Card.Item>
+                                <Stack horizontal tokens={stackTokens} styles={stackStyles}>
+                                    <Stack {...columnProps}>
+                                        <TextField styles={getStyles} label="Total llamadas realizadas:" underlined defaultValue={card.totalllamadas} />
+                                        <TextField styles={getStyles} label="Llamadas realizadas hoy:" underlined defaultValue={card.llamadashoy} />
+                                        <TextField styles={getStyles} label="Número de teléfono:" underlined value= {this.props.numero} />
+                                    </Stack>
                                 </Stack>
-                            </Stack>
-                        </Card.Section>
-                    </Card>
-                </div>
-            ))}
-        </div>
-    );
+                            </Card.Section>
+                        </Card>
+                    </div>
+                ))}
+            </div>
+        );
+    }    
 };
 
 export default Llamada;
