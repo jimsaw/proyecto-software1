@@ -58,7 +58,7 @@ const TablaLlamadas = () => {
     return (
         <div data-is-scrollable={true}>
             <div className={`s - Grid - col ms-sm9 ms-xl12 ${classNames.table}`}>
-                <div style={styles.actualizado}> Actualizado hasta: Lunes, 24 de agosto de 2020</div>
+                <div style={styles.actualizado}> Actualizado hasta: {fechaactual()}</div>
                 <div style={styles.tablallamadashoy}> Llamadas Realizadas Hoy: 2</div>
                 <DetailsList
                     items={operations}
@@ -71,3 +71,21 @@ const TablaLlamadas = () => {
 };
 
 export default TablaLlamadas;
+
+function fechaactual() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = dd + '/' + mm + '/' + yyyy;
+    return (today);
+}

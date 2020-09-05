@@ -114,8 +114,8 @@ class ExtraInfo extends React.Component {
                                 <Card style={styles.cardStyles}>
                                     <Card.Section>
                                         <Card.Item>
-                                            <i style={icon} className={`ms-Icon ms-Icon--Money`} aria-hidden="true"></i>
-                                            <Text style={styles.header.root}>Credencial/Edad</Text>
+                                            <i style={icon} className={`ms-Icon ms-Icon--ContactInfo`} aria-hidden="true"></i>
+                                            <Text style={styles.header.root}>Información adicional</Text>
                                         </Card.Item>
                                         <Stack horizontal tokens={stackTokens} styles={stackStyles}>
                                             <Stack {...columnProps}>
@@ -137,8 +137,8 @@ class ExtraInfo extends React.Component {
                         <Card style={styles.cardStyles}>
                             <Card.Section>
                                 <Card.Item>
-                                    <i style={icon} className={`ms-Icon ms-Icon--MailAlert`} aria-hidden="true"></i>
-                                    <Text style={styles.header.root}>Credencial/Edad</Text>
+                                    <i style={icon} className={`ms-Icon ms-Icon--ContactInfo`} aria-hidden="true"></i>
+                                    <Text style={styles.header.root}>Información Adicional</Text>
                                 </Card.Item>
                                 <Stack horizontal tokens={stackTokens} styles={stackStyles}>
                                     <Stack {...columnProps}>
