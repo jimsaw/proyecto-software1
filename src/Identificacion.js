@@ -4,37 +4,15 @@ import { Text } from '@fluentui/react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import 'office-ui-fabric-react/dist/css/fabric.css';
 import { Stack } from 'office-ui-fabric-react/lib/Stack';
-import { ComboBox, IComboBoxOption, IComboBox } from 'office-ui-fabric-react/lib/index';
+//import { ComboBox, IComboBoxOption, IComboBox } from 'office-ui-fabric-react/lib/index';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
+import { CommonLoading } from 'react-loadingg';
 
 
 initializeIcons(/* optional base url */);
 
-let url = 'http://127.0.0.1:8000/api/usuarios';
-let numero_celular = '6315329325';
-
-
-fetch(url)
-    .then(res => res.json())
-    .then((out) => {
-        var arreglo = [];
-        for (let i in out) {
-            if (out[i].telefono === numero_celular) {
-                arreglo.push(out[i])
-            }
-        }
-
-        const items: IComboBoxOption[] = [];
-        let x = 0;
-        for (let j in arreglo) {
-            let indice = x + 1;
-            let nombreapellido = arreglo[j].first_name + ' ' + arreglo[j].last_name;
-            items[x] = { key: indice, text: nombreapellido };
-            x++;
-        }
-        //console.log(items);
-    })
-    .catch(err => { throw err });
+var telefono_asterisk = '0983601005';
+//var telefono_asterisk_vacio = '';
 
 const container = {
     display: 'flex',
@@ -67,33 +45,6 @@ const styles = {
     }
 }
 
-const cards = [
-    {
-        title: 'Identificación',
-        icon: 'UserOptional',
-        cedula: '1310559387',
-        genero: 'Masculino',
-        key: 'key1'
-    }
-]
-
-const items: IComboBoxOption[] = [
-    { key: '1', text: 'Luis Montenegro' },
-    { key: '2', text: 'Melanie Lasso' },
-    { key: '3', text: 'Oscar Pallazhco' },
-    { key: '4', text: 'Pedro Macias' },
-];
-
-//const comboBoxStyle = { maxWidth: 300 };
-const ComboBoxCustomStyledExampleStyles = {
-    label: {
-        color: '#0078d4',
-        fontWeight: 'bold',
-        fontSize: 20,
-    },
-
-};
-
 const stackTokens = { childrenGap: 50 };
 const stackStyles: Partial<IStackStyles> = { root: { width: '100%', paddingLeft: 40, } };
 const columnProps: Partial<IStackProps> = {
@@ -101,39 +52,119 @@ const columnProps: Partial<IStackProps> = {
     styles: { root: { width: '80%' } },
 };
 
-const Identificacion = () => {
-    const [selectedKey, setSelectedKey] = React.useState('2');
+class Identificacion extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+            isLoaded: false,
+            items: []
+        };
+    }
 
-    const onChange = React.useCallback(
-        (ev: React.FormEvent<IComboBox>, option?: IComboBoxOption): void => {
-            setSelectedKey(option?.key);
-        },
-        [setSelectedKey],
-    );
+    componentDidMount() {
+        fetch("http://127.0.0.1:8000/api/usuarios")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result
+                    });
+                },
+                // Nota: es importante manejar errores aquí y no en 
+                // un bloque catch() para que no interceptemos errores
+                // de errores reales en los componentes.
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
 
-    return (
-        <div style={container}>
-            {cards.map((card) => (
-                <div className="s-Grid-col ms-sm-3 ms-xl12" key={card.key}>
-                    <Card style={styles.cardStyles}>
-                        <Card.Section>
-                            <Card.Item>
-                                <i style={icon} className={`ms-Icon ms-Icon--${card.icon}`} aria-hidden="true"></i>
-                                <Text style={styles.header.root}>{card.title}</Text>
-                            </Card.Item>
-                            <Stack horizontal tokens={stackTokens} styles={stackStyles}>
-                                <Stack {...columnProps}>
-                                    <ComboBox style={ComboBoxCustomStyledExampleStyles} selectedKey={selectedKey} label="Nombre:" allowFreeform autoComplete="on" options={items} onChange={onChange} />
-                                    <TextField styles={getStyles} label="Cédula:" underlined defaultValue={card.cedula} />
-                                    <TextField styles={getStyles} label="Género:" underlined defaultValue={card.genero} />
+    render() {
+        const { error, isLoaded, items } = this.state;
+        if (error) {
+            return <div>Error: {error.message}</div>;
+        } else if (!isLoaded) {
+            return <CommonLoading style={{ margin: '5vh 0', }} />;
+        } else {
+            for (var i = 0; i < items.length; i++) {
+                if (items.[i].telefono === telefono_asterisk) {
+                    if (items[i].genero === 'M') {
+                        return (
+                            <div style={container}>
+                                <div className="s-Grid-col ms-sm-3 ms-xl12" key={items[i].id}>
+                                    <Card style={styles.cardStyles}>
+                                        <Card.Section>
+                                            <Card.Item>
+                                                <i style={icon} className={`ms-Icon ms-Icon--UserOptional`} aria-hidden="true"></i>
+                                                <Text style={styles.header.root}>Identificación</Text>
+                                            </Card.Item>
+                                            <Stack horizontal tokens={stackTokens} styles={stackStyles}>
+                                                <Stack {...columnProps}>
+                                                    <TextField styles={getStyles} label="Nombre:" underlined defaultValue={items[i].first_name} />
+                                                    <TextField styles={getStyles} label="Cédula:" underlined defaultValue={items[i].cedula} />
+                                                    <TextField styles={getStyles} label="Género:" underlined defaultValue='Masculino' />
+                                                </Stack>
+                                            </Stack>
+                                        </Card.Section>
+                                    </Card>
+                                </div>
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div style={container}>
+                                <div className="s-Grid-col ms-sm-3 ms-xl12" key={items[i].id}>
+                                    <Card style={styles.cardStyles}>
+                                        <Card.Section>
+                                            <Card.Item>
+                                                <i style={icon} className={`ms-Icon ms-Icon--UserOptional`} aria-hidden="true"></i>
+                                                <Text style={styles.header.root}>Identificación</Text>
+                                            </Card.Item>
+                                            <Stack horizontal tokens={stackTokens} styles={stackStyles}>
+                                                <Stack {...columnProps}>
+                                                    <TextField styles={getStyles} label="Nombre:" underlined defaultValue={items[i].first_name + ' ' + items[i].last_name} />
+                                                    <TextField styles={getStyles} label="Cédula:" underlined defaultValue={items[i].cedula} />
+                                                    <TextField styles={getStyles} label="Género:" underlined defaultValue='Femenino' />
+                                                </Stack>
+                                            </Stack>
+                                        </Card.Section>
+                                    </Card>
+                                </div>
+                            </div>
+                        );
+                    }
+                }
+            }
+            return (
+                <div style={container}>
+                    <div className="s-Grid-col ms-sm-3 ms-xl12" key='1'>
+                        <Card style={styles.cardStyles}>
+                            <Card.Section>
+                                <Card.Item>
+                                    <i style={icon} className={`ms-Icon ms-Icon--UserOptional`} aria-hidden="true"></i>
+                                    <Text style={styles.header.root}>Identificación</Text>
+                                </Card.Item>
+                                <Stack horizontal tokens={stackTokens} styles={stackStyles}>
+                                    <Stack {...columnProps}>
+                                        <TextField styles={getStyles} label="Nombre:" underlined defaultValue='' />
+                                        <TextField styles={getStyles} label="Cédula:" underlined defaultValue='' />
+                                        <TextField styles={getStyles} label="Género:" underlined defaultValue='' />
+                                    </Stack>
                                 </Stack>
-                            </Stack>
-                        </Card.Section>
-                    </Card>
+                            </Card.Section>
+                        </Card>
+                    </div>
                 </div>
-            ))}
-        </div>
-    );
+            );
+
+        }
+    }
+
 };
 
 export default Identificacion;
