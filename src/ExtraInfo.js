@@ -72,32 +72,32 @@ class ExtraInfo extends React.Component {
         super(props);
         this.state = {
             error: null,
-            isLoaded: false,
+            isLoaded: true,
             items: []
         };
     }
 
-    componentDidMount() {
-        fetch("http://127.0.0.1:8000/api/usuarios")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        items: result
-                    });
-                },
-                // Nota: es importante manejar errores aquí y no en 
-                // un bloque catch() para que no interceptemos errores
-                // de errores reales en los componentes.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
-    }
+    // componentDidMount() {
+    //     fetch("http://127.0.0.1:8000/api/usuarios")
+    //         .then(res => res.json())
+    //         .then(
+    //             (result) => {
+    //                 this.setState({
+    //                     isLoaded: true,
+    //                     items: result
+    //                 });
+    //             },
+    //             // Nota: es importante manejar errores aquí y no en 
+    //             // un bloque catch() para que no interceptemos errores
+    //             // de errores reales en los componentes.
+    //             (error) => {
+    //                 this.setState({
+    //                     isLoaded: true,
+    //                     error
+    //                 });
+    //             }
+    //         )
+    // }
 
     render() {
         const { error, isLoaded, items } = this.state;
@@ -106,34 +106,32 @@ class ExtraInfo extends React.Component {
         } else if (!isLoaded) {
             return <CommonLoading style={{ margin: '5vh 0', }} />;
         } else {
-            for (var i = 0; i < items.length; i++) {
-                if (items.[i].telefono === telefono_asterisk) {
-                    return (
-                        <div style={container}>
-                            <div className="s-Grid-col ms-sm-3 ms-xl12" key={items[i].id}>
-                                <Card style={styles.cardStyles}>
-                                    <Card.Section>
-                                        <Card.Item>
-                                            <i style={icon} className={`ms-Icon ms-Icon--ContactInfo`} aria-hidden="true"></i>
-                                            <Text style={styles.header.root}>Información adicional</Text>
-                                        </Card.Item>
-                                        <Stack horizontal tokens={stackTokens} styles={stackStyles}>
-                                            <Stack {...columnProps}>
-                                                <TextField styles={getStyles} label="Equipo:" underlined defaultValue={items[i].equipo_futbol} />
-                                                <TextField styles={getStyles} label="Dirección:" underlined defaultValue={items[i].direccion} />
-                                                <TextField styles={getStyles} label="Hobbies:" underlined defaultValue={items[i].hobbies} />
-                                            </Stack>
+            if (Object.keys(this.props.usuario).length !== 0) {
+                return (
+                    <div style={container}>
+                        <div className="s-Grid-col ms-sm-3 ms-xl12" key={this.props.usuario.id}>
+                            <Card style={styles.cardStyles}>
+                                <Card.Section>
+                                    <Card.Item>
+                                        <i style={icon} className={`ms-Icon ms-Icon--ContactInfo`} aria-hidden="true"></i>
+                                        <Text style={styles.header.root}>Información adicional</Text>
+                                    </Card.Item>
+                                    <Stack horizontal tokens={stackTokens} styles={stackStyles}>
+                                        <Stack {...columnProps}>
+                                            <TextField styles={getStyles} label="Equipo:" underlined defaultValue={this.props.usuario.equipo_futbol} />
+                                            <TextField styles={getStyles} label="Dirección:" underlined defaultValue={this.props.usuario.direccion} />
+                                            <TextField styles={getStyles} label="Hobbies:" underlined defaultValue={this.props.usuario.hobbies} />
                                         </Stack>
-                                    </Card.Section>
-                                </Card>
-                            </div>
+                                    </Stack>
+                                </Card.Section>
+                            </Card>
                         </div>
-                    );
-                }
+                    </div>
+                );
             }
             return (
                 <div style={container}>
-                    <div className="s-Grid-col ms-sm-3 ms-xl12" key={items[i].id}>
+                    <div className="s-Grid-col ms-sm-3 ms-xl12" key={this.props.usuario.id}>
                         <Card style={styles.cardStyles}>
                             <Card.Section>
                                 <Card.Item>
@@ -142,9 +140,9 @@ class ExtraInfo extends React.Component {
                                 </Card.Item>
                                 <Stack horizontal tokens={stackTokens} styles={stackStyles}>
                                     <Stack {...columnProps}>
-                                        <TextField styles={getStyles} label="Equipo:" underlined defaultValue={items[i].equipo_futbol} />
-                                        <TextField styles={getStyles} label="Dirección:" underlined defaultValue={items[i].direccion} />
-                                        <TextField styles={getStyles} label="Hobbies:" underlined defaultValue={items[i].hobbies} />
+                                        <TextField styles={getStyles} label="Equipo:" underlined defaultValue={''} />
+                                        <TextField styles={getStyles} label="Dirección:" underlined defaultValue={''} />
+                                        <TextField styles={getStyles} label="Hobbies:" underlined defaultValue={''} />
                                     </Stack>
                                 </Stack>
                             </Card.Section>

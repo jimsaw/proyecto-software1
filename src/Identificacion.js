@@ -57,88 +57,61 @@ class Identificacion extends React.Component {
         super(props);
         this.state = {
             error: null,
-            isLoaded: false,
-            items: []
+            isLoaded: true,
         };
     }
 
-    async componentDidMount() {
-        await fetch("http://127.0.0.1:8000/api/usuarios")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        items: result
-                    });
-                },
-                // Nota: es importante manejar errores aquí y no en 
-                // un bloque catch() para que no interceptemos errores
-                // de errores reales en los componentes.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
-    }
+    // async componentDidMount() {
+    //     await fetch("http://127.0.0.1:8000/api/usuarios")
+    //         .then(res => res.json())
+    //         .then(
+    //             (result) => {
+    //                 this.setState({
+    //                     isLoaded: true,
+    //                     items: result
+    //                 });
+    //             },
+    //             // Nota: es importante manejar errores aquí y no en 
+    //             // un bloque catch() para que no interceptemos errores
+    //             // de errores reales en los componentes.
+    //             (error) => {
+    //                 this.setState({
+    //                     isLoaded: true,
+    //                     error
+    //                 });
+    //             }
+    //         )
+    // }
 
     render() {
-        const { error, isLoaded, items } = this.state;
+        const { error, isLoaded } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
             return <CommonLoading style={{ margin: '5vh 0', }} />;
         } else {
-            for (var i = 0; i < items.length; i++) {
-                if (items[i].telefono === this.props.numero) {
-                    if (items[i].genero === 'M') {
-                        return (
-                            <div style={container}>
-                                <div className="s-Grid-col ms-sm-3 ms-xl12" key={items[i].id}>
-                                    <Card style={styles.cardStyles}>
-                                        <Card.Section>
-                                            <Card.Item>
-                                                <i style={icon} className={`ms-Icon ms-Icon--UserOptional`} aria-hidden="true"></i>
-                                                <Text style={styles.header.root}>Identificación</Text>
-                                            </Card.Item>
-                                            <Stack horizontal tokens={stackTokens} styles={stackStyles}>
-                                                <Stack {...columnProps}>
-                                                    <TextField styles={getStyles} label="Nombre:" underlined defaultValue={items[i].first_name} />
-                                                    <TextField styles={getStyles} label="Cédula:" underlined defaultValue={items[i].cedula} />
-                                                    <TextField styles={getStyles} label="Género:" underlined defaultValue='Masculino' />
-                                                </Stack>
-                                            </Stack>
-                                        </Card.Section>
-                                    </Card>
-                                </div>
-                            </div>
-                        );
-                    } else {
-                        return (
-                            <div style={container}>
-                                <div className="s-Grid-col ms-sm-3 ms-xl12" key={items[i].id}>
-                                    <Card style={styles.cardStyles}>
-                                        <Card.Section>
-                                            <Card.Item>
-                                                <i style={icon} className={`ms-Icon ms-Icon--UserOptional`} aria-hidden="true"></i>
-                                                <Text style={styles.header.root}>Identificación</Text>
-                                            </Card.Item>
-                                            <Stack horizontal tokens={stackTokens} styles={stackStyles}>
-                                                <Stack {...columnProps}>
-                                                    <TextField styles={getStyles} label="Nombre:" underlined defaultValue={items[i].first_name + ' ' + items[i].last_name} />
-                                                    <TextField styles={getStyles} label="Cédula:" underlined defaultValue={items[i].cedula} />
-                                                    <TextField styles={getStyles} label="Género:" underlined defaultValue='Femenino' />
-                                                </Stack>
-                                            </Stack>
-                                        </Card.Section>
-                                    </Card>
-                                </div>
-                            </div>
-                        );
-                    }
-                }
+            if (Object.keys(this.props.usuario).length !== 0) {
+                return (
+                    <div style={container}>
+                        <div className="s-Grid-col ms-sm-3 ms-xl12" key='1'>
+                            <Card style={styles.cardStyles}>
+                                <Card.Section>
+                                    <Card.Item>
+                                        <i style={icon} className={`ms-Icon ms-Icon--UserOptional`} aria-hidden="true"></i>
+                                        <Text style={styles.header.root}>Identificación</Text>
+                                    </Card.Item>
+                                    <Stack horizontal tokens={stackTokens} styles={stackStyles}>
+                                        <Stack {...columnProps}>
+                                            <TextField styles={getStyles} label="Nombre:" underlined value={this.props.usuario.first_name + " " + this.props.usuario.last_name} />
+                                            <TextField styles={getStyles} label="Cédula:" underlined value= {this.props.usuario.cedula} />
+                                            <TextField styles={getStyles} label="Género:" underlined value={this.props.usuario.genero === 'M' ? "Masculino" : 'Femenino'} />
+                                        </Stack>
+                                    </Stack>
+                                </Card.Section>
+                            </Card>
+                        </div>
+                    </div>
+                );
             }
             return (
                 <div style={container}>

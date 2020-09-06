@@ -19,7 +19,9 @@ async function CallerNumber(){
     // en el navegador se abrirá una ventana emergente en la que se pide 
     // las credenciales para acceder a ari.
 
-    let callerNumber = '0952369856'; //numero por defecto para pruebas
+    // let callerNumber = '0983601005'; //numero por defecto para pruebas
+    // let callerNumber = '0941548578'; //numero por defecto para pruebas
+    let callerNumber = ''; //numero por defecto para pruebas
 
     await fetch('http://192.168.100.145:8088/ari/channels', {
         method: 'get',
@@ -38,18 +40,16 @@ async function CallerNumber(){
         jsondata.forEach(channel => {  
             if (channel.state === 'Ringing') {
                 callerNumber = channel.connected.number;
+                return callerNumber;
             }            
         });
         console.log('callerNumber:', callerNumber);
 
     }).catch( error =>{
         console.log(error);
-        return "error";
+        return callerNumber;
     });
 
     return callerNumber;
 };
-
-var callerNumber = CallerNumber();
-
-export default callerNumber;
+export {CallerNumber};

@@ -93,7 +93,7 @@ class Llamada extends Component {
                                     <Stack {...columnProps}>
                                         <TextField styles={getStyles} label="Total llamadas realizadas:" underlined defaultValue={card.totalllamadas} />
                                         <TextField styles={getStyles} label="Llamadas realizadas hoy:" underlined defaultValue={card.llamadashoy} />
-                                        <TextField styles={getStyles} label="Número de teléfono:" underlined value= {this.props.numero} />
+                                        <TextField styles={getStyles} label="Número de teléfono:" underlined value= {this.props.usuario.telefono} />
                                     </Stack>
                                 </Stack>
                             </Card.Section>

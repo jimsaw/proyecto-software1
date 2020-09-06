@@ -72,32 +72,32 @@ class Credencial extends React.Component {
         super(props);
         this.state = {
             error: null,
-            isLoaded: false,
+            isLoaded: true,
             items: []
         };
     }
 
-    componentDidMount() {
-        fetch("http://127.0.0.1:8000/api/usuarios")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        items: result
-                    });
-                },
-                // Nota: es importante manejar errores aquí y no en 
-                // un bloque catch() para que no interceptemos errores
-                // de errores reales en los componentes.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
-    }
+    // componentDidMount() {
+    //     fetch("http://127.0.0.1:8000/api/usuarios")
+    //         .then(res => res.json())
+    //         .then(
+    //             (result) => {
+    //                 this.setState({
+    //                     isLoaded: true,
+    //                     items: result
+    //                 });
+    //             },
+    //             // Nota: es importante manejar errores aquí y no en 
+    //             // un bloque catch() para que no interceptemos errores
+    //             // de errores reales en los componentes.
+    //             (error) => {
+    //                 this.setState({
+    //                     isLoaded: true,
+    //                     error
+    //                 });
+    //             }
+    //         )
+    // }
 
     render() {
         const { error, isLoaded, items } = this.state;
@@ -106,34 +106,32 @@ class Credencial extends React.Component {
         } else if (!isLoaded) {
             return <CommonLoading style={{ margin: '5vh 0', }} />;
         } else {
-            for (var i = 0; i < items.length; i++) {
-                if (items.[i].telefono === telefono_asterisk) {
-                    return (
-                        <div style={container}>
-                            <div className="s-Grid-col ms-sm-3 ms-xl12" key={items[i].id}>
-                                <Card style={styles.cardStyles}>
-                                    <Card.Section>
-                                        <Card.Item>
-                                            <i style={icon} className={`ms-Icon ms-Icon--MailAlert`} aria-hidden="true"></i>
-                                            <Text style={styles.header.root}>Credencial/Edad</Text>
-                                        </Card.Item>
-                                        <Stack horizontal tokens={stackTokens} styles={stackStyles}>
-                                            <Stack {...columnProps}>
-                                                <TextField styles={getStyles} label="Email:" underlined defaultValue={items[i].email} />
-                                                <TextField styles={getStyles} label="Fecha de nacimiento:" underlined defaultValue={items[i].fecha_nac} />
-                                                <TextField styles={getStyles} label="Edad:" underlined defaultValue={getEdad(items[i].fecha_nac)} />
-                                            </Stack>
+            if (Object.keys(this.props.usuario).length !== 0) {
+                return (
+                    <div style={container}>
+                        <div className="s-Grid-col ms-sm-3 ms-xl12" key={this.props.usuario.id}>
+                            <Card style={styles.cardStyles}>
+                                <Card.Section>
+                                    <Card.Item>
+                                        <i style={icon} className={`ms-Icon ms-Icon--MailAlert`} aria-hidden="true"></i>
+                                        <Text style={styles.header.root}>Credencial/Edad</Text>
+                                    </Card.Item>
+                                    <Stack horizontal tokens={stackTokens} styles={stackStyles}>
+                                        <Stack {...columnProps}>
+                                            <TextField styles={getStyles} label="Email:" underlined defaultValue={this.props.usuario.email} />
+                                            <TextField styles={getStyles} label="Fecha de nacimiento:" underlined defaultValue={this.props.usuario.fecha_nac} />
+                                            <TextField styles={getStyles} label="Edad:" underlined defaultValue={getEdad(this.props.usuario.fecha_nac)} />
                                         </Stack>
-                                    </Card.Section>
-                                </Card>
-                            </div>
+                                    </Stack>
+                                </Card.Section>
+                            </Card>
                         </div>
-                    );
-                }
+                    </div>
+                );
             }
             return (
                 <div style={container}>
-                    <div className="s-Grid-col ms-sm-3 ms-xl12" key={items[i].id}>
+                    <div className="s-Grid-col ms-sm-3 ms-xl12" key={this.props.usuario.id}>
                         <Card style={styles.cardStyles}>
                             <Card.Section>
                                 <Card.Item>
@@ -142,9 +140,9 @@ class Credencial extends React.Component {
                                 </Card.Item>
                                 <Stack horizontal tokens={stackTokens} styles={stackStyles}>
                                     <Stack {...columnProps}>
-                                        <TextField styles={getStyles} label="Email:" underlined defaultValue={items[i].email} />
-                                        <TextField styles={getStyles} label="Fecha de nacimiento:" underlined defaultValue={items[i].fecha_nac} />
-                                        <TextField styles={getStyles} label="Edad:" underlined defaultValue={getEdad(items[i].fecha_nac)} />
+                                        <TextField styles={getStyles} label="Email:" underlined defaultValue={''} />
+                                        <TextField styles={getStyles} label="Fecha de nacimiento:" underlined defaultValue={''} />
+                                        <TextField styles={getStyles} label="Edad:" underlined defaultValue={''} />
                                     </Stack>
                                 </Stack>
                             </Card.Section>
