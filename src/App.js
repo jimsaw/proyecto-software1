@@ -37,6 +37,24 @@ class App extends Component {
       usuario: await getInfo(this.state.numero),
       isLoaded: true,
     });
+    this.timerID = setInterval(
+      () => this.tick(), 1000
+    );
+  }
+
+  async tick(){
+    let consulta = await CallerNumber();
+    if(this.state.numero !== consulta){      
+      this.setState({
+        numero: consulta,
+      });
+      this.setState({
+        usuario: await getInfo(consulta),
+        isLoaded: true,
+      });
+
+    }
+
   }
 
   render() {

@@ -2,11 +2,14 @@ async function getInfo(numero){
     console.log('en getinfo');
     console.log('numero recibido: ',numero);
     let user = {}
+    // no buscar en todos los usuarios por el numero vacio
+    if (numero === '') {
+        return user;
+    }
     await fetch("http://127.0.0.1:8000/api/usuarios", {
         method: 'get',
     }).then( response =>{
         if (response.ok) {
-            console.log('response getinfo is ok');            
             return response.json();
         } else {
             throw new Error('Bad HTTP stuff');
@@ -14,7 +17,6 @@ async function getInfo(numero){
     }).then( jsondata =>{
         jsondata.forEach(usuario => {
             if (numero === usuario.telefono) {
-                console.log("usuario: ", usuario);
                 user = usuario;
                 return user;
             }            
